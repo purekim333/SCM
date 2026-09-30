@@ -30,7 +30,6 @@ with connection:
         result = db.fetchall()
         print(result)
 
-
 # 지정된 형태로 데이터 반복해서 집어넣기
 # 데이터 형태는 key값은 order 연번이니까 increment하게
 # 자재코드도 임의의 자릿수 숫자
