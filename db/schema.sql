@@ -36,9 +36,9 @@ CREATE TABLE orders(
   primary key (sales_order, sales_order_item)
 );
 
--- 오더의 지연 판단은
--- order qty와 ship_qty가 같아지는 cut_off_dat가
--- ship_need_date보다 늦어지면 지연!
+-- 오더 스냅샷에서 오늘 order qty와 ship_qty를 비교해봐야 한다
+-- 만약 order qty = ship qty가 같아진다 이때 모두 출하가 되었다는 뜻
+-- 선적필요일 날짜의 스냅샷에서 ship_qty가 order_qty보다 작으면 지연
 
 CREATE TABLE order_snapshots(
   -- 오더 번호
@@ -50,10 +50,10 @@ CREATE TABLE order_snapshots(
 
   -- 이날짜의 해당 오더의 상태는
   order_qty INT, -- 총 주문 수량
-  prod_qty INT, -- 생산 수량 총량
+  prod_qty INT, -- 생산 수량
   carry_over_qty INT, -- 이월 수량
   stuffing_qty INT, -- 적입 수량
-  ship_qty INT, -- 출하 수량
+  ship_qty INT, -- 출하 수량 (누적)
 
   primary key (sales_order, sales_order_item, cut_off_date)
   
