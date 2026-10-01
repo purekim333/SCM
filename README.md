@@ -11,6 +11,8 @@ issue와 pr을 통해 매일을 기록하며 하루하루 성장해 나가고 �
 ```bash
 cp .env.example .env
 
+# .env 값 채우기
+
 mysql -u <username> -p -e "CREATE DATABASE IF NOT EXISTS <db_name> CHARACTER SET utf8mb4;"
 
 python -m venv venv

@@ -21,7 +21,8 @@ connection = pymysql.connect(
     charset = 'utf8mb4'
 )
 
-sql =""" INSERT INTO 
+sql =""" 
+INSERT INTO 
 orders (
     SALES_ORDER, SALES_ORDER_ITEM,
     PLANT, PLANT_DESC,
@@ -41,6 +42,13 @@ VALUES(
 """
 
 value_list = [
+    ("S00100", "10", 
+     "1120", "광주공장",
+     "1004447",
+     "234553", "전기자전거01",
+     200,
+     "20261231", "20261201", "20261101" 
+     ),
     ("S00100", "20", 
      "1120", "광주공장",
      "1004447",
@@ -53,6 +61,7 @@ value_list = [
 with connection:
     db = connection.cursor()
     with db :
+        db.execute(("TRUNCATE TABLE orders"))
         for value in value_list:
             print(value)
             db.execute(sql, value)
