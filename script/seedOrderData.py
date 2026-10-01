@@ -18,18 +18,57 @@ connection = pymysql.connect(
     user = db_username,
     password = db_password,
     database = db_name,
-    charset = 'utf8'
+    charset = 'utf8mb4'
 )
 
+sql =""" 
+INSERT INTO 
+orders (
+    SALES_ORDER, SALES_ORDER_ITEM,
+    PLANT, PLANT_DESC,
+    SHIPTO,
+    MTRL_CODE, MTRL_DESC,
+    ORDER_QTY,
+    RQST_DATE, SHIP_NEED_DATE, PROD_NEED_DATE
+)
+VALUES(
+    %s, %s,
+    %s, %s,
+    %s,
+    %s, %s,
+    %s,
+    %s, %s, %s
+) 
+"""
+
+value_list = [
+    ("S00100", "10", 
+     "1120", "광주공장",
+     "1004447",
+     "234553", "전기자전거01",
+     200,
+     "20261231", "20261201", "20261101" 
+     ),
+    ("S00100", "20", 
+     "1120", "광주공장",
+     "1004447",
+     "234563", "전기자전거02",
+     120,
+     "20261231", "20261201", "20261101"   
+     )
+]
 
 with connection:
     db = connection.cursor()
     with db :
-        sql = "select 1 from dual "
-        db.execute(sql)
-        result = db.fetchall()
-        print(result)
-
+        db.execute(("TRUNCATE TABLE orders"))
+        for value in value_list:
+            print(value)
+            db.execute(sql, value)
+            connection.commit()
+        db.execute(("select * from orders"))
+        print("db 실행결과: ", db.fetchall())
+    
 
 # 지정된 형태로 데이터 반복해서 집어넣기
 # 데이터 형태는 key값은 order 연번이니까 increment하게
