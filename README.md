@@ -8,11 +8,10 @@ issue와 pr을 통해 매일을 기록하며 하루하루 성장해 나가고 �
 
 ### 최초 실행 방법
 
-#### 1.env.example 키값을 채우기
-
 ```bash
+cp .env.example .env
 
-cp .evn.example > .env
+mysql -u <username> -p -e "CREATE DATABASE IF NOT EXISTS <db_name> CHARACTER SET utf8mb4;"
 
 python -m venv venv
 
