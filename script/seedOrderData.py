@@ -41,36 +41,41 @@ VALUES(
 ) 
 """
 
-value_list = [
-    ("S00100", "10", 
-     "1120", "광주공장",
-     "1004447",
-     "234553", "전기자전거01",
-     200,
-     "20261231", "20261201", "20261101" 
-     ),
-    ("S00100", "20", 
-     "1120", "광주공장",
-     "1004447",
-     "234563", "전기자전거02",
-     120,
-     "20261231", "20261201", "20261101"   
-     )
-]
+# value_list = [
+#     ("S00100", "10", 
+#      "1120", "광주공장",
+#      "1004447",
+#      "234553", "전기자전거01",
+#      200,
+#      "20261231", "20261201", "20261101" 
+#      ),
+#     ("S00100", "20", 
+#      "1120", "광주공장",
+#      "1004447",
+#      "234563", "전기자전거02",
+#      120,
+#      "20261231", "20261201", "20261101"   
+#      )
+# ]
+
+order_list = range(100, 110)
+order_item_list = range(10, 10*10+1, 10)
 
 with connection:
     db = connection.cursor()
     with db :
         db.execute(("TRUNCATE TABLE orders"))
-        for value in value_list:
-            print(value)
-            db.execute(sql, value)
-            connection.commit()
-        db.execute(("select * from orders"))
-        print("db 실행결과: ", db.fetchall())
-    
 
-# 지정된 형태로 데이터 반복해서 집어넣기
-# 데이터 형태는 key값은 order 연번이니까 increment하게
-# 자재코드도 임의의 자릿수 숫자
-# 흠 일단 스키마 보고 데이터 넣어야 하는데 이게 너무 빡이네
+        for order in order_list:
+            for order_item in order_item_list:
+                so = f"S{order:05}"
+                so_item = order_item
+
+                record = (so, so_item, '1120', '광주공장', '1004447', '234555',
+                          '전기자전거', 200, '20261231', '20261201', '20261101')
+                
+                db.execute(sql, record)
+
+        connection.commit()
+        db.execute(("select count(*) from orders"))
+        print("db 실행결과: ", db.fetchone())
