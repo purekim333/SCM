@@ -23,6 +23,6 @@ pip install -r requirements.txt
 
 mysql -u <username> -p <db_name> < db/schema.sql
 
-python script/seedOrderData.py
+python script/seed_order_data.py
 ```
 
