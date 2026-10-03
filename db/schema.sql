@@ -1,10 +1,12 @@
+DROP TABLE IF EXISTS supply_plans;
+
 DROP VIEW IF EXISTS vw_order_delay;
 DROP VIEW IF EXISTS vw_order_progress;
 
 DROP TABLE IF EXISTS order_snapshots;
 DROP TABLE IF EXISTS orders;
 
-DROP TABLE IF EXISTS supply_plans;
+
 
 
 CREATE TABLE orders(
@@ -69,7 +71,7 @@ CREATE TABLE supply_plans(
   demand_qty INT, -- 수요 수량 (이번달에 들어가야 하는 양)
   prod_qty INT, -- 생산반영 수량
   carry_over_qty INT, -- 생산 미반영 수량
-  short_reason varchar(255), -- 생산 미반영 이유 (CAPA, MATERIAL, NULL)
+  short_reason varchar(20), -- 생산 미반영 이유 (CAPA, MATERIAL, NULL)
 
   PRIMARY KEY (plan_month, sales_order, sales_order_item)
 );
