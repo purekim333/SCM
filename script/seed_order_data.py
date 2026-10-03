@@ -61,7 +61,7 @@ VALUES(
 # ]
 
 # 주문번호 생성
-order_list = range(100, 110)
+order_list = range(100, 140)
 
 # 랜덤 날짜 생성
 ### 미리 정해둬야 하는건, rqst_date 
