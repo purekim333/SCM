@@ -4,6 +4,8 @@ DROP VIEW IF EXISTS vw_order_progress;
 DROP TABLE IF EXISTS order_snapshots;
 DROP TABLE IF EXISTS orders;
 
+DROP TABLE IF EXISTS supply_plans;
+
 
 CREATE TABLE orders(
   -- 오더 번호
@@ -57,4 +59,17 @@ CREATE TABLE order_snapshots(
 
   primary key (sales_order, sales_order_item, cut_off_date)
   
+);
+
+CREATE TABLE supply_plans(
+  sales_order varchar(20),
+  sales_order_item varchar(20),
+  plan_month DATE, -- 계획 월 (매월 1일로 저장)
+  order_qty INT, -- 오더 수량 (반정규화)
+  demand_qty INT, -- 수요 수량 (이번달에 들어가야 하는 양)
+  prod_qty INT, -- 생산반영 수량
+  carry_over_qty INT, -- 생산 미반영 수량
+  short_reason varchar(255), -- 생산 미반영 이유 (CAPA, MATERIAL, NULL)
+
+  PRIMARY KEY (plan_month, sales_order, sales_order_item)
 );
