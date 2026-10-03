@@ -1,6 +1,8 @@
 import os
 from dotenv import load_dotenv
 import pymysql 
+import random
+from datetime import datetime, timedelta
 
 # 환경 변수 불러오기
 load_dotenv()
@@ -58,8 +60,26 @@ VALUES(
 #      )
 # ]
 
+# 주문번호 생성
 order_list = range(100, 110)
-order_item_list = range(10, 10*10+1, 10)
+
+# 랜덤 날짜 생성
+### 미리 정해둬야 하는건, rqst_date 
+### 제한사항은 sysdate 보다 커야 하는건가
+# 흠 상관없을듯 종결된 오더로 보면 되는거지
+# 대신 같은 오더에서는 여러개의 오더아이템이 모두 같이 도착해야됨
+# 그럼 인덱스로 고정할까?
+# CTO가 하는 역할이 이런걸 정하는건가?
+
+random.seed(42) # 랜덤 시드 고정(재현성)
+
+# 정해진 규칙은 그럼 25년 이후 중 임의의 날짜를 납품요청일로 설정하고
+# 해당 날짜를 기준으로 생산 리드타임, 물류 리드타임 고려 하는 걸로
+# 임의의 리드타임 지금 설정
+
+start_date_range = datetime(2025, 1, 1)
+prod_lt = timedelta(days=30)
+ship_lt = timedelta(days=60)
 
 with connection:
     db = connection.cursor()
@@ -67,12 +87,20 @@ with connection:
         db.execute(("TRUNCATE TABLE orders"))
 
         for order in order_list:
-            for order_item in order_item_list:
+
+            item_cnt = random.randint(1,10)
+
+            rqst_date = start_date_range + timedelta(days=random.randint(1,1095))
+            ship_need_date = rqst_date - ship_lt
+            prod_need_date = ship_need_date - prod_lt
+
+            for item in range(1, item_cnt+1):
+
                 so = f"S{order:05}"
-                so_item = order_item
+                so_item = str(item * 10)
 
                 record = (so, so_item, '1120', '광주공장', '1004447', '234555',
-                          '전기자전거', 200, '20261231', '20261201', '20261101')
+                          '전기자전거', 200, rqst_date, ship_need_date, prod_need_date)
                 
                 db.execute(sql, record)
 
