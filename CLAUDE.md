@@ -28,12 +28,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Database
 
 `db/schema.sql`은 파괴적이고 멱등적이다. 뷰와 테이블을 DROP한 뒤 다시 생성하므로, 재실행하면 모든 데이터가 삭제된다.
-DROP 순서는 의존성 역순을 지킨다: 뷰 → `order_snapshots` → `orders`.
+DROP 순서는 의존성 역순을 지킨다: `supply_plans` → 뷰 → `order_snapshots` → `orders`.
 뷰(`vw_order_progress`, `vw_order_delay`)는 계획만 있고 아직 정의하지 않았다. 추가할 때는 테이블 생성 이후에 정의한다.
 
 ### 설계 원칙
 
-- 약속(orders)과 사실(order_snapshots)을 분리한다.
+- 약속(`orders`), 계획(`supply_plans`), 사실(`order_snapshots`)을 분리한다.
 - 특별한 의도가 없다면, 현상(인터페이스로 받은 데이터)을 그대로 DB에 담고 판단은 계산으로 꺼낸다.
 
 ### Data model
@@ -41,9 +41,16 @@ DROP 순서는 의존성 역순을 지킨다: 뷰 → `order_snapshots` → `ord
 - `orders`: 오더 라인당 한 행 (PK `sales_order`, `sales_order_item`).
   생산 공장, 납품처, 자재, `order_qty`와 리드타임 역산으로 연결된 세 개의 납기를 가진다:
   `rqst_date`(납품요청일) ← `ship_need_date`(운송 리드타임을 고려한 선적필요일, 예: 미국 약 3개월) ← `prod_need_date`(생산필요일).
+  `order_date`(수주일)도 가진다. 고객 리드타임(`rqst_date - order_date`)이 표준 납기보다 짧으면 긴급 오더다.
+  긴급 여부는 컬럼으로 저장하지 않고 계산으로 판단한다. 표준 납기와 긴급 비율 값은 시드 스크립트 상수를 따른다.
 - `order_snapshots`: 일별 인터페이스 상태를 그대로 쌓음 (PK에 `cut_off_date` 추가).
   `prod_qty`, `carry_over_qty`, `stuffing_qty`(컨테이너 적입 수량)는 그날 해당 단계에 머물러 있는 수량,
   `ship_qty`는 누적 출하 수량.
+- `supply_plans`: 계획 월 × 오더 라인당 한 행 (PK `plan_month`, `sales_order`, `sales_order_item`). `plan_month`는 매월 1일.
+  `demand_qty`는 그 달에 반영해야 할 수량으로, 첫 달은 `order_qty`, 이후는 전월 `carry_over_qty`다.
+  항상 `prod_qty + carry_over_qty = demand_qty`. `carry_over_qty`는 공정 단계가 아니라 다음 달로 넘어간 미반영 수량이다.
+  `short_reason`은 미반영 사유 코드(`CAPA`, `MATERIAL`, 없으면 NULL). `order_qty`는 의도적 반정규화라 `orders`와 일치 검증이 필요하다.
+  그 달 계획 확정일(생산반영일) 이전에 수주된 오더만 그 달 계획 대상이 된다. 확정일 이후 수주는 다음 달로 밀린다.
 
 ### Delay rule (시점 기준)
 
@@ -55,6 +62,8 @@ DROP 순서는 의존성 역순을 지킨다: 뷰 → `order_snapshots` → `ord
 - 스냅샷의 `order_qty` 유지 여부 (주문 변경 이력 추적 필요성 검토 중)
 - `ship_need_date`에 스냅샷이 없을 때의 판단 기준 (현재 가정: 그 이전 가장 최근 스냅샷)
 - `orders`와 `order_snapshots` 간 외래키 추가
+- 공장 캐파 테이블(`plant_capacities`) 추가 예정. 캐파 부족(`CAPA`)의 근거를 데이터로 남기기 위함
+- `short_reason` 코드의 의미는 코드 테이블로 옮길 예정
 
 스키마 주석은 한국어로 작성한다.
 
