@@ -1,12 +1,8 @@
 DROP TABLE IF EXISTS supply_plans;
-
 DROP VIEW IF EXISTS vw_order_delay;
 DROP VIEW IF EXISTS vw_order_progress;
-
 DROP TABLE IF EXISTS order_snapshots;
 DROP TABLE IF EXISTS orders;
-
-
 
 
 CREATE TABLE orders(
@@ -27,6 +23,10 @@ CREATE TABLE orders(
   
   -- 주문수량
   order_qty INT,
+
+  -- 주문 받은 날짜
+
+  order_date DATE,
 
   -- 납품요청일 (이날까지 가져다 주세요)
   rqst_date DATE,

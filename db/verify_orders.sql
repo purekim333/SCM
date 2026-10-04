@@ -38,3 +38,20 @@ WHERE
   OR
   ship_need_date <= prod_need_date
 ;
+
+-- 긴급오더 범위 10퍼센트 확인
+-- 예상결과: 정상오더: 퍼센트, 긴급오더: 퍼센트
+
+SELECT 
+  CASE WHEN
+    DATEDIFF(rqst_date, order_date) < 130
+  THEN '긴급'
+  WHEN
+    DATEDIFF(rqst_date, order_date) >= 130
+  THEN '정상'
+  END AS order_type,
+  count(distinct sales_order) as order_cnt,
+  count(distinct sales_order) / sum(count(distinct sales_order)) over() as ratio 
+FROM orders
+GROUP BY order_type
+

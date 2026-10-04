@@ -15,12 +15,12 @@ db_password = os.getenv("DB_PASSWORD")
 
 # 로컬 mysql이랑 연결하기
 connection = pymysql.connect(
-    host = db_host,
-    port = db_port,
-    user = db_username,
-    password = db_password,
-    database = db_name,
-    charset = 'utf8mb4'
+    host=db_host,
+    port=db_port,
+    user=db_username,
+    password=db_password,
+    database=db_name,
+    charset='utf8mb4'
 )
 
 sql =""" 
@@ -30,7 +30,7 @@ orders (
     PLANT, PLANT_DESC,
     SHIPTO,
     MTRL_CODE, MTRL_DESC,
-    ORDER_QTY,
+    ORDER_QTY, ORDER_DATE,
     RQST_DATE, SHIP_NEED_DATE, PROD_NEED_DATE
 )
 VALUES(
@@ -38,7 +38,7 @@ VALUES(
     %s, %s,
     %s,
     %s, %s,
-    %s,
+    %s, %s,
     %s, %s, %s
 ) 
 """
@@ -47,6 +47,15 @@ ORDER_CNT = 40
 RQST_DATE_RANGE = 1095
 PROD_LT_DAYS = 30
 SHIP_LT_DAYS = 60
+
+## 긴급오더 판단
+URGENT_ORDER_RATIO = 0.1 #10퍼센트 정도 눈치없는 오더라고 가정
+
+## 수주 간격 범위
+COMMON_ORDER_DAYS = 130
+URGENT_ORDER_MIN_DAYS = 95
+COMMON_ORDER_MAX_DAYS = 200
+
 
 # 주문번호 생성
 order_list = range(100, 100 + ORDER_CNT)
@@ -61,7 +70,7 @@ ship_lt = timedelta(days=SHIP_LT_DAYS)
 
 with connection:
     cursor = connection.cursor()
-    with cursor :
+    with cursor:
         cursor.execute(("TRUNCATE TABLE orders"))
 
         for order in order_list:
@@ -72,13 +81,17 @@ with connection:
             ship_need_date = rqst_date - ship_lt
             prod_need_date = ship_need_date - prod_lt
 
-            for item in range(1, item_cnt+1):
+            if random.random() < URGENT_ORDER_RATIO: #10퍼센트 확률로 긴급오더
+                order_date = rqst_date - timedelta(days=random.randint(URGENT_ORDER_MIN_DAYS, COMMON_ORDER_DAYS-1))
+            else:
+                order_date = rqst_date - timedelta(days=random.randint(COMMON_ORDER_DAYS, COMMON_ORDER_MAX_DAYS))
 
+            for item in range(1, item_cnt+1):
                 so = f"S{order:05}"
                 so_item = str(item * 10)
 
                 record = (so, so_item, '1120', '광주공장', '1004447', '234555',
-                          '전기자전거', 200, rqst_date, ship_need_date, prod_need_date)
+                          '전기자전거', 200, order_date, rqst_date, ship_need_date, prod_need_date)
                 
                 cursor.execute(sql, record)
 
