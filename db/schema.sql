@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS plant_capacities;
 DROP TABLE IF EXISTS supply_plans;
 DROP VIEW IF EXISTS vw_order_delay;
 DROP VIEW IF EXISTS vw_order_progress;
@@ -74,4 +75,14 @@ CREATE TABLE supply_plans(
   short_reason varchar(20), -- 생산 미반영 이유 (CAPA, MATERIAL, NULL)
 
   PRIMARY KEY (plan_month, sales_order, sales_order_item)
+);
+
+
+CREATE TABLE plant_capacities(
+  plan_month DATE, -- 공장 월별 캐파 계산을 위한 플랜 월
+  plant varchar(20), -- 공장 코드
+  plant_desc varchar(20), -- 공장 이름
+  capa_qty INT, -- 월 생산 가능 수량(대)
+
+  PRIMARY KEY (plan_month, plant)
 );
