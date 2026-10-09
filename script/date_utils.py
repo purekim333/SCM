@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from dateutil.relativedelta import relativedelta
 
 
@@ -20,3 +22,29 @@ def month_range(start_date, end_date):
         current_date += relativedelta(months=1)
 
     return month_list
+
+
+LOCK_DATE_STANDARD = 5
+
+
+def plan_lock_date(input_date):
+    """
+    년, 월을 입력받으면 해당 말일에서 5일 앞의 생산반영일을 반환
+    다음 달 계획을 확정하는 날
+    다음달로 더한 뒤에 5일 감소
+    """
+    last_month_date = input_date.replace(day=1) + relativedelta(day=31)
+
+    cnt = 0
+    current_date = last_month_date
+
+    while True:
+        print("현재 날짜:", current_date, current_date.weekday())
+
+        # 현재 날짜가 평일이라면
+        if current_date.weekday() < 5:
+            cnt += 1
+            if cnt == LOCK_DATE_STANDARD:
+                return current_date
+
+        current_date -= timedelta(days=1)
