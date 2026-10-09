@@ -17,6 +17,10 @@ SQL = """
 
 
 def plan_one_month(capa, demands):
+    '''
+    정렬된 demands를 입력으로 받음 (이월분 먼저, prod_need_date 순)
+    앞에서부터 캐파를 배분, 모자라면 반영하고 나머지는 이월 + 'CAPA'
+    '''
     remain_capa = capa
     result = []
 
