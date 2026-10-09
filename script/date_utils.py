@@ -39,8 +39,6 @@ def plan_lock_date(input_date):
     current_date = last_month_date
 
     while True:
-        print("현재 날짜:", current_date, current_date.weekday())
-
         # 현재 날짜가 평일이라면
         if current_date.weekday() < 5:
             cnt += 1
