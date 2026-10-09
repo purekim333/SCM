@@ -1,6 +1,8 @@
 import os
-from dotenv import load_dotenv
+
 import pymysql
+from dotenv import load_dotenv
+
 
 def get_connection():
     # 환경 변수 불러오기
@@ -19,6 +21,6 @@ def get_connection():
         user=db_username,
         password=db_password,
         database=db_name,
-        charset='utf8mb4'
-    )   
+        charset="utf8mb4",
+    )
     return connection
