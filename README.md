@@ -101,6 +101,86 @@ Python · MySQL 8 · PyMySQL · python-dateutil · pytest · Anthropic SDK (예�
 | `component_receipts` | 🚚 부품 입고 | 부품 입고(GR) 문서 아이템. 일별 입고를 그대로 담음 | 🛠️ 스키마만 |
 | `order_snapshots` | 📦 🚢 사실 | 매일의 생산·이월·적입·누적 출하 수량을 그대로 쌓음 | 🛠️ 3주차 |
 
+### 🧩 ERD
+
+아직 DB에 외래키는 걸지 않았습니다 (6주차 재논의). 아래 선은 조인에 쓰는 **논리적 관계**입니다.
+
+```mermaid
+erDiagram
+    orders ||--o{ order_snapshots : "sales_order, sales_order_item (일별 사실)"
+    orders ||--o{ supply_plans : "sales_order, sales_order_item (월별 계획)"
+    plant_capacities ||--o{ supply_plans : "plan_month (월 한도)"
+    orders }o--|{ bom_items : "mtrl_code (완제품 → 부품)"
+    bom_items }|--o{ component_receipts : "component_code (부품 입고)"
+
+    orders {
+        varchar sales_order PK "오더 번호"
+        varchar sales_order_item PK "오더 아이템"
+        varchar plant "생산 공장"
+        varchar plant_desc
+        varchar shipto "납품처"
+        varchar mtrl_code "완제품 코드"
+        varchar mtrl_desc
+        int order_qty "주문 수량"
+        date order_date "수주일"
+        date rqst_date "납품요청일"
+        date ship_need_date "선적필요일"
+        date prod_need_date "생산필요일"
+    }
+
+    order_snapshots {
+        varchar sales_order PK
+        varchar sales_order_item PK
+        date cut_off_date PK "스냅샷 일자"
+        int order_qty
+        int prod_qty "생산 수량"
+        int carry_over_qty "이월 수량"
+        int stuffing_qty "적입 수량"
+        int ship_qty "누적 출하 수량"
+    }
+
+    supply_plans {
+        date plan_month PK "계획 월 (매월 1일)"
+        varchar sales_order PK
+        varchar sales_order_item PK
+        int order_qty "반정규화"
+        int demand_qty "이번 달 수요"
+        int prod_qty "생산반영 수량"
+        int carry_over_qty "미반영(이월) 수량"
+        varchar short_reason "CAPA, MATERIAL, NULL"
+    }
+
+    plant_capacities {
+        date plan_month PK
+        varchar plant PK
+        varchar plant_desc
+        int capa_qty "월 생산 가능 수량"
+    }
+
+    bom_items {
+        varchar mtrl_code PK "완제품 코드"
+        varchar component_code PK "부품 코드"
+        varchar mtrl_desc
+        varchar component_desc
+        int component_qty_per_unit "1대당 소요량"
+    }
+
+    component_receipts {
+        varchar gr_no PK "입고 문서 번호"
+        varchar gr_item PK "입고 문서 아이템"
+        date receipt_date "입고일"
+        varchar plant
+        varchar plant_desc
+        varchar vendor "협력사"
+        varchar vendor_desc
+        varchar po_no "구매 오더"
+        varchar po_item
+        varchar component_code "부품 코드"
+        varchar component_desc
+        int receipt_qty "입고 수량"
+    }
+```
+
 공급계획 행에서는 항상 `prod_qty + carry_over_qty = demand_qty`가 성립합니다.
 이월분은 다음 달 새 행의 `demand_qty`로 이어져, "언제 왜 밀렸는지"가 사슬로 남습니다.
 
