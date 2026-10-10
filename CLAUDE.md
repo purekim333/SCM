@@ -28,7 +28,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Database
 
 `db/schema.sql`은 파괴적이고 멱등적이다. 뷰와 테이블을 DROP한 뒤 다시 생성하므로, 재실행하면 모든 데이터가 삭제된다.
-DROP 순서는 의존성 역순을 지킨다: `supply_plans` → 뷰 → `order_snapshots` → `orders`.
+DROP 순서는 의존성 역순을 지킨다: `component_receipts` → `bom_items` → `plant_capacities` → `supply_plans` → 뷰 → `order_snapshots` → `orders`.
 뷰(`vw_order_progress`, `vw_order_delay`)는 계획만 있고 아직 정의하지 않았다. 추가할 때는 테이블 생성 이후에 정의한다.
 
 ### 설계 원칙
@@ -51,6 +51,20 @@ DROP 순서는 의존성 역순을 지킨다: `supply_plans` → 뷰 → `order_
   항상 `prod_qty + carry_over_qty = demand_qty`. `carry_over_qty`는 공정 단계가 아니라 다음 달로 넘어간 미반영 수량이다.
   `short_reason`은 미반영 사유 코드(`CAPA`, `MATERIAL`, 없으면 NULL). `order_qty`는 의도적 반정규화라 `orders`와 일치 검증이 필요하다.
   그 달 계획 확정일(생산반영일) 이전에 수주된 오더만 그 달 계획 대상이 된다. 확정일 이후 수주는 다음 달로 밀린다.
+  생산반영일은 전월 말일부터 거꾸로 센 5번째 영업일이다 (주말만 제외, 공휴일 무시. 말일이 평일이면 말일이 1번째). 예: 2월 계획은 1/26에 확정.
+  배분 우선순위는 전월 이월분 먼저, 그다음 `prod_need_date` 빠른 순이며, 캐파를 남김없이 쓰는 부분 반영을 허용한다.
+- `plant_capacities`: 공장 × 계획 월당 한 행 (PK `plan_month`, `plant`). `capa_qty`는 월 생산 가능 수량(대).
+  수요가 없는 달도 이월분이 떨어질 수 있으므로 매달 행을 둔다. 시드는 1120 광주공장 월 2,000대.
+- `bom_items`: 완제품 × 부품당 한 행 (PK `mtrl_code`, `component_code`). `component_qty_per_unit`은 완제품 1대당 부품 소요량. 1단계 BOM만 다룬다.
+- `component_receipts`: 부품 입고(GR) 문서 아이템당 한 행 (PK `gr_no`, `gr_item`). 헤더 정보(입고일, 공장, 협력사)는 아이템마다 반복해서 담는다.
+  입고는 일별 현상 그대로 담고, 월 가용량은 `SUM`으로 계산한다.
+
+### Supply plan rule
+
+- 그달 생산 한도 = min(캐파, 자재로 만들 수 있는 대수).
+- 이월이 생기면 더 작은 쪽이 사유다. 자재 쪽이 작으면 `MATERIAL`, 캐파 쪽이 작으면 `CAPA`, 같으면 `MATERIAL`.
+- 시뮬레이션은 전월 `supply_plans`의 이월분을 읽으므로 첫 달부터 순서대로 실행한다.
+- 실행 순서: `db/schema.sql` → `script/seed_order_data.py` → `script/seed_plant_capacities.py` → `script/simulate_supply_plans.py`. 모든 스크립트는 멱등이다.
 
 ### Delay rule (시점 기준)
 
@@ -61,8 +75,8 @@ DROP 순서는 의존성 역순을 지킨다: `supply_plans` → 뷰 → `order_
 
 - 스냅샷의 `order_qty` 유지 여부 (주문 변경 이력 추적 필요성 검토 중)
 - `ship_need_date`에 스냅샷이 없을 때의 판단 기준 (현재 가정: 그 이전 가장 최근 스냅샷)
-- `orders`와 `order_snapshots` 간 외래키 추가
-- 공장 캐파 테이블(`plant_capacities`) 추가 예정. 캐파 부족(`CAPA`)의 근거를 데이터로 남기기 위함
+- 테이블 간 외래키 추가 (현재 FK, NOT NULL, CHECK 제약 없음)
+- 헤더/아이템 분리, 마스터 테이블 등 실무형 스키마 정비 (#18)
 - `short_reason` 코드의 의미는 코드 테이블로 옮길 예정
 
 스키마 주석은 한국어로 작성한다.
