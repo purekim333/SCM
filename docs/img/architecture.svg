@@ -1,0 +1,152 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" width="1000" height="640" font-family="'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f3a5f"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e07a2f"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="640" rx="18" fill="#f7f9fc"/>
+  <text x="30" y="40" font-size="22" font-weight="700" fill="#1f3a5f">🏆 최종 아키텍처 (M4 데모 데이 12/18)</text>
+  <text x="30" y="62" font-size="13" fill="#5b6b80">질문 하나가 DB를 돌아 "원인 사슬 리포트"로 돌아오기까지. 주황 태그는 그 부분이 완성되는 마일스톤</text>
+
+  <!-- 사용자 -->
+  <rect x="20" y="100" width="135" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="87" y="140" font-size="30" text-anchor="middle">👤</text>
+  <text x="87" y="165" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">현업 담당자</text>
+  <text x="87" y="185" font-size="11" fill="#5b6b80" text-anchor="middle">"S00135 왜 늦었어?"</text>
+  <text x="87" y="200" font-size="11" fill="#5b6b80" text-anchor="middle">"물류비 왜 늘었지?"</text>
+
+  <!-- Vue -->
+  <rect x="180" y="100" width="135" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="247" y="140" font-size="30" text-anchor="middle">🖥️</text>
+  <text x="247" y="165" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">Vue 웹 챗</text>
+  <text x="247" y="185" font-size="11" fill="#5b6b80" text-anchor="middle">대화 · 표 · 차트</text>
+  <rect x="222" y="192" width="50" height="16" rx="8" fill="#e07a2f"/>
+  <text x="247" y="204" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">M2</text>
+
+  <!-- FastAPI -->
+  <rect x="340" y="100" width="135" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="407" y="140" font-size="30" text-anchor="middle">⚡</text>
+  <text x="407" y="165" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">FastAPI</text>
+  <text x="407" y="185" font-size="11" fill="#5b6b80" text-anchor="middle">스트리밍 응답</text>
+  <rect x="382" y="192" width="50" height="16" rx="8" fill="#e07a2f"/>
+  <text x="407" y="204" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">M2</text>
+
+  <line x1="155" y1="140" x2="178" y2="140" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="315" y1="140" x2="338" y2="140" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="475" y1="140" x2="518" y2="140" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 에이전트 루프 -->
+  <rect x="520" y="84" width="460" height="270" rx="16" fill="#fff4ec" stroke="#e07a2f" stroke-width="2.5"/>
+  <text x="540" y="110" font-size="15" font-weight="700" fill="#1f3a5f">🤖 에이전트 루프 (프레임워크 없이 직접 구현)</text>
+  <rect x="900" y="96" width="62" height="18" rx="9" fill="#e07a2f"/>
+  <text x="931" y="109" font-size="10.5" font-weight="700" fill="#fff" text-anchor="middle">M1</text>
+
+  <rect x="610" y="124" width="280" height="56" rx="12" fill="#1f3a5f"/>
+  <text x="750" y="148" font-size="14" font-weight="700" fill="#fff" text-anchor="middle">🧠 Claude (Anthropic SDK)</text>
+  <text x="750" y="168" font-size="11" fill="#dfe6f0" text-anchor="middle">tool use: 어떤 도구를 부를지 스스로 결정</text>
+
+  <!-- 루프 화살표 -->
+  <path d="M 600 160 C 548 160, 548 230, 590 236" fill="none" stroke="#e07a2f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <path d="M 910 236 C 952 230, 952 160, 900 160" fill="none" stroke="#e07a2f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <text x="540" y="200" font-size="10.5" fill="#e07a2f" font-weight="700">호출</text>
+  <text x="935" y="200" font-size="10.5" fill="#e07a2f" font-weight="700">결과</text>
+  <text x="750" y="200" font-size="11" fill="#5b6b80" text-anchor="middle">생각 → 도구 호출 → 결과 보고 → 다시 생각 (답 나올 때까지)</text>
+
+  <!-- 도구 -->
+  <g>
+    <rect x="535" y="214" width="105" height="76" rx="10" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+    <text x="587" y="238" font-size="18" text-anchor="middle">🗺️</text>
+    <text x="587" y="258" font-size="11" font-weight="700" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">get_schema</text>
+    <text x="587" y="276" font-size="10" fill="#5b6b80" text-anchor="middle">테이블·컬럼 파악</text>
+  </g>
+  <g>
+    <rect x="648" y="214" width="105" height="76" rx="10" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+    <text x="700" y="238" font-size="18" text-anchor="middle">🧮</text>
+    <text x="700" y="258" font-size="11" font-weight="700" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">run_sql</text>
+    <text x="700" y="276" font-size="10" fill="#5b6b80" text-anchor="middle">SELECT만 · LIMIT</text>
+  </g>
+  <g>
+    <rect x="761" y="214" width="105" height="76" rx="10" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+    <text x="813" y="238" font-size="18" text-anchor="middle">📚</text>
+    <text x="813" y="258" font-size="11" font-weight="700" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">get_semantics</text>
+    <text x="813" y="276" font-size="10" fill="#5b6b80" text-anchor="middle">코드 뜻 · 지연 규칙</text>
+  </g>
+  <g>
+    <rect x="874" y="214" width="95" height="76" rx="10" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+    <text x="921" y="238" font-size="18" text-anchor="middle">🌐</text>
+    <text x="921" y="258" font-size="11" font-weight="700" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">web_search</text>
+    <text x="921" y="276" font-size="10" fill="#5b6b80" text-anchor="middle">외부 뉴스</text>
+  </g>
+  <text x="750" y="318" font-size="11" fill="#1f3a5f" text-anchor="middle">🔌 엔진 코드에는 특정 회사 테이블 이름이 없다 → 어느 제조사 DB에 붙여도 동작</text>
+  <text x="750" y="338" font-size="10.5" fill="#5b6b80" text-anchor="middle">대화 맥락 유지(멀티턴) · 비용 · 토큰 관리</text>
+
+  <!-- 리포트 (돌아오는 길) -->
+  <path d="M 520 300 L 480 300" stroke="#e07a2f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <rect x="180" y="250" width="300" height="104" rx="14" fill="#fff" stroke="#e07a2f" stroke-width="2"/>
+  <text x="198" y="274" font-size="14" font-weight="700" fill="#1f3a5f">📄 원인 사슬 리포트 (예시)</text>
+  <rect x="412" y="262" width="54" height="16" rx="8" fill="#e07a2f"/>
+  <text x="439" y="274" font-size="10" font-weight="700" fill="#fff" text-anchor="middle">M3</text>
+  <text x="198" y="296" font-size="11" fill="#5b2a24">🚚 부품 입고 지연</text>
+  <text x="198" y="314" font-size="11" fill="#5b2a24">→ 🗓️ 3월 생산반영 이월 (MATERIAL)</text>
+  <text x="198" y="332" font-size="11" fill="#5b2a24">→ 🚢 선적필요일까지 120대 미출하</text>
+  <text x="198" y="348" font-size="10" fill="#5b6b80">근거 SQL과 숫자를 함께 보여 줌</text>
+  <path d="M 180 300 C 120 300, 87 270, 87 212" fill="none" stroke="#e07a2f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+
+  <!-- 데이터 계층 -->
+  <line x1="587" y1="354" x2="587" y2="398" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <line x1="700" y1="354" x2="700" y2="398" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <line x1="813" y1="354" x2="813" y2="398" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <line x1="921" y1="354" x2="921" y2="398" stroke="#1f3a5f" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+  <rect x="20" y="400" width="840" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="40" y="426" font-size="15" font-weight="700" fill="#1f3a5f">🗄️ MySQL: 제조사 DB (데모 테넌트 = 씅 전기자전거)</text>
+  <text x="40" y="446" font-size="11" fill="#5b6b80">읽기 전용 계정으로만 접속</text>
+  <g font-family="Consolas, monospace" font-size="10.5">
+    <rect x="40" y="458" width="70" height="20" rx="10" fill="#1f3a5f"/><text x="75" y="472" fill="#fff" text-anchor="middle">orders</text>
+    <rect x="116" y="458" width="104" height="20" rx="10" fill="#1f3a5f"/><text x="168" y="472" fill="#fff" text-anchor="middle">supply_plans</text>
+    <rect x="226" y="458" width="122" height="20" rx="10" fill="#1f3a5f"/><text x="287" y="472" fill="#fff" text-anchor="middle">plant_capacities</text>
+    <rect x="354" y="458" width="84" height="20" rx="10" fill="#1f3a5f"/><text x="396" y="472" fill="#fff" text-anchor="middle">bom_items</text>
+    <rect x="40" y="484" width="136" height="20" rx="10" fill="#1f3a5f"/><text x="108" y="498" fill="#fff" text-anchor="middle">component_receipts</text>
+    <rect x="182" y="484" width="118" height="20" rx="10" fill="#1f3a5f"/><text x="241" y="498" fill="#fff" text-anchor="middle">order_snapshots</text>
+    <rect x="306" y="484" width="132" height="20" rx="10" fill="#9aa8ba"/><text x="372" y="498" fill="#fff" text-anchor="middle">운송·물류비 (M3)</text>
+  </g>
+  <line x1="460" y1="420" x2="460" y2="500" stroke="#dfe6f0" stroke-width="1.5"/>
+  <text x="480" y="440" font-size="13" font-weight="700" fill="#1f3a5f">📚 시맨틱 레이어</text>
+  <text x="480" y="460" font-size="11" fill="#5b6b80">· 코드 테이블 (short_reason: CAPA, MATERIAL)</text>
+  <text x="480" y="478" font-size="11" fill="#5b6b80">· 컬럼 COMMENT, 지연 판정 규칙 (vw_order_delay)</text>
+  <text x="480" y="496" font-size="11" fill="#5b6b80">· 도메인 지식은 프롬프트가 아니라 고객 데이터 쪽에</text>
+
+  <rect x="875" y="400" width="105" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="927" y="440" font-size="26" text-anchor="middle">🌍</text>
+  <text x="927" y="465" font-size="12.5" font-weight="700" fill="#1f3a5f" text-anchor="middle">외부 뉴스</text>
+  <text x="927" y="483" font-size="10" fill="#5b6b80" text-anchor="middle">항로 · 지정학</text>
+  <text x="927" y="498" font-size="10" fill="#5b6b80" text-anchor="middle">이슈</text>
+
+  <!-- 운영 띠 -->
+  <rect x="20" y="528" width="960" height="92" rx="14" fill="#e8eef6"/>
+  <text x="40" y="552" font-size="13" font-weight="700" fill="#1f3a5f">🛡️ 품질 · 운영</text>
+  <g>
+    <rect x="40" y="562" width="220" height="46" rx="10" fill="#fff"/>
+    <text x="52" y="582" font-size="12" font-weight="700" fill="#1f3a5f">📏 평가 세트</text>
+    <text x="52" y="599" font-size="10.5" fill="#5b6b80">질문 → 기대 답 20개로 채점</text>
+  </g>
+  <g>
+    <rect x="272" y="562" width="220" height="46" rx="10" fill="#fff"/>
+    <text x="284" y="582" font-size="12" font-weight="700" fill="#1f3a5f">🔁 CI · GitHub Actions</text>
+    <text x="284" y="599" font-size="10.5" fill="#5b6b80">ruff + pytest + 평가 자동 실행</text>
+  </g>
+  <g>
+    <rect x="504" y="562" width="220" height="46" rx="10" fill="#fff"/>
+    <text x="516" y="582" font-size="12" font-weight="700" fill="#1f3a5f">🐳 Docker Compose</text>
+    <text x="516" y="599" font-size="10.5" fill="#5b6b80">Vue + FastAPI + MySQL 한 번에</text>
+  </g>
+  <g>
+    <rect x="736" y="562" width="232" height="46" rx="10" fill="#fff"/>
+    <text x="748" y="582" font-size="12" font-weight="700" fill="#1f3a5f">🔒 안전장치</text>
+    <text x="748" y="599" font-size="10.5" fill="#5b6b80">읽기 전용 · SELECT만 · LIMIT · 비용 상한</text>
+  </g>
+</svg>
