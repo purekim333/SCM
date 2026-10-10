@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS component_receipts;
+DROP TABLE IF EXISTS bom_items;
 DROP TABLE IF EXISTS plant_capacities;
 DROP TABLE IF EXISTS supply_plans;
 DROP VIEW IF EXISTS vw_order_delay;
@@ -85,4 +87,38 @@ CREATE TABLE plant_capacities(
   capa_qty INT, -- 월 생산 가능 수량(대)
 
   PRIMARY KEY (plan_month, plant)
+);
+
+-- bom 테이블 완제품 하나에 component_code 하나씩 여러 행이 나오는 구조
+CREATE TABLE bom_items(
+  mtrl_code varchar(20), -- 완제품 코드
+  mtrl_desc varchar(20), -- 완제품 이름
+
+  component_code varchar(20), -- 부품 코드
+  component_desc varchar(20), -- 부품 이름
+  component_qty_per_unit INT, -- 완제품 1대당 부품 수량
+
+  PRIMARY KEY (mtrl_code, component_code)
+);
+
+-- 부품 입고 (Goods Receipt). 입고 문서(gr_no) 하나에 아이템(gr_item) 여러 줄
+-- 헤더 정보(입고일, 공장, 협력사)는 orders처럼 아이템마다 반복해서 담는다
+CREATE TABLE component_receipts(
+  gr_no varchar(20),          -- 입고 문서 번호
+  gr_item varchar(20),        -- 입고 문서 아이템 번호
+
+  receipt_date DATE,          -- 입고일 (전기일)
+  plant varchar(20),          -- 입고 공장 코드
+  plant_desc varchar(20),     -- 입고 공장 이름
+  vendor varchar(20),         -- 협력사 코드
+  vendor_desc varchar(40),    -- 협력사 이름
+
+  po_no varchar(20),          -- 구매 오더 번호 (어떤 발주에 대한 입고인지)
+  po_item varchar(20),        -- 구매 오더 아이템 번호
+
+  component_code varchar(20), -- 부품 코드
+  component_desc varchar(20), -- 부품 이름
+  receipt_qty INT,            -- 입고 수량
+
+  PRIMARY KEY (gr_no, gr_item)
 );
