@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650" width="1000" height="650" font-family="'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f3a5f"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e07a2f"/>
+    </marker>
+    <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect x="0" y="0" width="1000" height="650" rx="18" fill="#f7f9fc"/>
+  <text x="30" y="42" font-size="22" font-weight="700" fill="#1f3a5f">🚲 씅 전기자전거 제조 프로세스 맵</text>
+  <text x="30" y="64" font-size="13" fill="#5b6b80">1120 광주공장 · 고객이 주문한 자전거가 도착하기까지, 그리고 그걸 담는 테이블</text>
+
+  <!-- 입력: 캐파, 자재 -->
+  <rect x="60" y="82" width="180" height="78" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+  <text x="150" y="108" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">🏭 공장 캐파</text>
+  <text x="150" y="127" font-size="12" fill="#5b6b80" text-anchor="middle">한 달에 최대 2,000대</text>
+  <rect x="85" y="135" width="130" height="18" rx="9" fill="#e8eef6"/>
+  <text x="150" y="148" font-size="11" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">plant_capacities</text>
+
+  <rect x="270" y="82" width="270" height="78" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+  <text x="405" y="108" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">🔩 자재 (부품)</text>
+  <text x="405" y="127" font-size="12" fill="#5b6b80" text-anchor="middle">1대당 소요량(BOM) × 협력사 입고(GR) 🚚</text>
+  <rect x="290" y="135" width="95" height="18" rx="9" fill="#e8eef6"/>
+  <text x="337" y="148" font-size="11" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">bom_items</text>
+  <rect x="393" y="135" width="135" height="18" rx="9" fill="#e8eef6"/>
+  <text x="460" y="148" font-size="11" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">component_receipts</text>
+
+  <!-- 한도 게이트 -->
+  <line x1="150" y1="160" x2="215" y2="180" stroke="#e07a2f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <line x1="405" y1="160" x2="300" y2="180" stroke="#e07a2f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <rect x="150" y="182" width="210" height="26" rx="13" fill="#e07a2f"/>
+  <text x="255" y="200" font-size="12.5" font-weight="700" fill="#fff" text-anchor="middle">그달 한도 = min(캐파, 자재)</text>
+  <line x1="255" y1="208" x2="255" y2="228" stroke="#e07a2f" stroke-width="2" marker-end="url(#arrow-orange)"/>
+
+  <!-- 스테이지 카드 -->
+  <g>
+    <rect x="20" y="230" width="140" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="90" y="275" font-size="34" text-anchor="middle">📝</text>
+    <text x="90" y="305" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">오더 접수</text>
+    <text x="90" y="325" font-size="11.5" fill="#5b6b80" text-anchor="middle">"이날까지 200대 주세요"</text>
+  </g>
+  <g>
+    <rect x="185" y="230" width="140" height="110" rx="14" fill="#fff4ec" stroke="#e07a2f" stroke-width="2.5"/>
+    <text x="255" y="275" font-size="34" text-anchor="middle">🗓️</text>
+    <text x="255" y="305" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">월 생산반영</text>
+    <text x="255" y="325" font-size="11.5" fill="#5b6b80" text-anchor="middle">이월분 먼저, 필요일 순</text>
+  </g>
+  <g>
+    <rect x="350" y="230" width="140" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="420" y="275" font-size="34" text-anchor="middle">🏭</text>
+    <text x="420" y="305" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">생산</text>
+    <text x="420" y="325" font-size="11.5" fill="#5b6b80" text-anchor="middle">반영된 만큼 조립</text>
+  </g>
+  <g>
+    <rect x="515" y="230" width="140" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="585" y="275" font-size="34" text-anchor="middle">📦</text>
+    <text x="585" y="305" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">컨테이너 적입</text>
+    <text x="585" y="325" font-size="11.5" fill="#5b6b80" text-anchor="middle">완성품을 컨테이너에</text>
+  </g>
+  <g>
+    <rect x="680" y="230" width="140" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="750" y="275" font-size="34" text-anchor="middle">🚢</text>
+    <text x="750" y="305" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">선적·출하</text>
+    <text x="750" y="325" font-size="11.5" fill="#5b6b80" text-anchor="middle">배에 싣고 출발</text>
+  </g>
+  <g>
+    <rect x="845" y="230" width="140" height="110" rx="14" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="915" y="275" font-size="34" text-anchor="middle">🏁</text>
+    <text x="915" y="305" font-size="15" font-weight="700" fill="#1f3a5f" text-anchor="middle">고객 도착</text>
+    <text x="915" y="325" font-size="11.5" fill="#5b6b80" text-anchor="middle">약속한 날 도착!</text>
+  </g>
+
+  <!-- 스테이지 화살표 -->
+  <line x1="160" y1="285" x2="183" y2="285" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="325" y1="285" x2="348" y2="285" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="490" y1="285" x2="513" y2="285" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="655" y1="285" x2="678" y2="285" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="820" y1="285" x2="843" y2="285" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 이월 루프 -->
+  <path d="M 295 340 C 305 382, 205 382, 215 343" fill="none" stroke="#e07a2f" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#arrow-orange)"/>
+  <text x="255" y="398" font-size="11.5" font-weight="700" fill="#e07a2f" text-anchor="middle">⏭️ 넘치면 다음 달로 이월</text>
+
+  <!-- 테이블 칩 -->
+  <line x1="90" y1="340" x2="90" y2="413" stroke="#9aa8ba" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <rect x="45" y="413" width="90" height="26" rx="13" fill="#1f3a5f"/>
+  <text x="90" y="431" font-size="12" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">orders</text>
+  <text x="90" y="455" font-size="11" fill="#5b6b80" text-anchor="middle">약속</text>
+
+  <rect x="195" y="413" width="120" height="26" rx="13" fill="#1f3a5f"/>
+  <text x="255" y="431" font-size="12" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">supply_plans</text>
+  <text x="255" y="455" font-size="11" fill="#5b6b80" text-anchor="middle">계획 · 미반영 사유</text>
+
+  <line x1="420" y1="340" x2="420" y2="413" stroke="#9aa8ba" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="585" y1="340" x2="585" y2="413" stroke="#9aa8ba" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <line x1="750" y1="340" x2="750" y2="413" stroke="#9aa8ba" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <rect x="370" y="413" width="430" height="26" rx="13" fill="#1f3a5f"/>
+  <text x="585" y="431" font-size="12" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">order_snapshots  (prod_qty · stuffing_qty · ship_qty)</text>
+  <text x="585" y="455" font-size="11" fill="#5b6b80" text-anchor="middle">매일 인터페이스로 들어오는 사실</text>
+
+  <!-- 납기 타임라인 -->
+  <line x1="90" y1="498" x2="915" y2="498" stroke="#1f3a5f" stroke-width="2"/>
+  <circle cx="90" cy="498" r="5" fill="#1f3a5f"/>
+  <circle cx="255" cy="498" r="5" fill="#e07a2f"/>
+  <circle cx="420" cy="498" r="5" fill="#1f3a5f"/>
+  <circle cx="750" cy="498" r="5" fill="#1f3a5f"/>
+  <circle cx="915" cy="498" r="5" fill="#1f3a5f"/>
+  <text x="585" y="490" font-size="11.5" font-weight="700" fill="#1f3a5f" text-anchor="middle">← 생산 리드타임 30일 →</text>
+  <text x="832" y="490" font-size="11.5" font-weight="700" fill="#1f3a5f" text-anchor="middle">← 운송 60일 →</text>
+  <text x="90" y="518" font-size="11" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">order_date</text>
+  <text x="90" y="532" font-size="10.5" fill="#5b6b80" text-anchor="middle">수주일</text>
+  <text x="255" y="518" font-size="11" fill="#e07a2f" text-anchor="middle" font-family="Consolas, monospace">🔒 반영일</text>
+  <text x="255" y="532" font-size="10.5" fill="#5b6b80" text-anchor="middle">월말 5번째 영업일</text>
+  <text x="420" y="518" font-size="11" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">prod_need_date</text>
+  <text x="420" y="532" font-size="10.5" fill="#5b6b80" text-anchor="middle">생산필요일</text>
+  <text x="750" y="518" font-size="11" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">ship_need_date</text>
+  <text x="750" y="532" font-size="10.5" fill="#5b6b80" text-anchor="middle">선적필요일</text>
+  <text x="915" y="518" font-size="11" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">rqst_date</text>
+  <text x="915" y="532" font-size="10.5" fill="#5b6b80" text-anchor="middle">납품요청일</text>
+
+  <!-- 지연과 원인 사슬 -->
+  <rect x="20" y="552" width="965" height="80" rx="14" fill="#fdecea" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="40" y="580" font-size="14" font-weight="700" fill="#c0392b">💥 GAME OVER: 출하 지연</text>
+  <text x="40" y="602" font-size="12" fill="#5b2a24">선적필요일 스냅샷에서</text>
+  <text x="40" y="619" font-size="12" fill="#5b2a24" font-family="Consolas, monospace">ship_qty &lt; order_qty</text>
+
+  <text x="330" y="580" font-size="12.5" font-weight="700" fill="#c0392b">🤖 챗봇이 SQL로 찾아낼 "왜?" 사슬</text>
+  <rect x="330" y="592" width="170" height="28" rx="14" fill="#fff" stroke="#c0392b"/>
+  <text x="415" y="611" font-size="12" fill="#5b2a24" text-anchor="middle">🚚 부품 입고 지연</text>
+  <line x1="502" y1="606" x2="535" y2="606" stroke="#c0392b" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <rect x="538" y="592" width="230" height="28" rx="14" fill="#fff" stroke="#c0392b"/>
+  <text x="653" y="611" font-size="12" fill="#5b2a24" text-anchor="middle">🗓️ 생산반영 이월 (MATERIAL)</text>
+  <line x1="770" y1="606" x2="803" y2="606" stroke="#c0392b" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <rect x="806" y="592" width="160" height="28" rx="14" fill="#fff" stroke="#c0392b"/>
+  <text x="886" y="611" font-size="12" fill="#5b2a24" text-anchor="middle">🚢 출하 지연</text>
+</svg>

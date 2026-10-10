@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" font-family="'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f3a5f"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e07a2f"/>
+    </marker>
+  </defs>
+
+  <!-- 배경 -->
+  <rect x="0" y="0" width="1000" height="600" rx="18" fill="#f7f9fc"/>
+  <text x="30" y="40" font-size="22" font-weight="700" fill="#1f3a5f">🏭 1120 광주공장 안에서는 무슨 일이?</text>
+  <text x="30" y="62" font-size="13" fill="#5b6b80">부품이 들어와서 전기자전거가 되어 컨테이너에 실리기까지. 각 단계에서 어떤 데이터가 남는지 함께 표시했어요</text>
+
+  <!-- 공장 건물 (톱니 지붕) -->
+  <path d="M130,118 L130,96 L200,78 L200,96 L270,78 L270,96 L340,78 L340,96 L410,78 L410,96 L480,78 L480,96 L550,78 L550,96 L620,78 L620,96 L690,78 L690,96 L760,78 L760,96 L830,78 L830,96 L900,78 L900,96 L970,78 L970,118 Z" fill="#dfe6f0" stroke="#1f3a5f" stroke-width="1.5"/>
+  <rect x="130" y="118" width="840" height="340" rx="6" fill="#ffffff" stroke="#1f3a5f" stroke-width="2"/>
+
+  <!-- 작업지시 띠 -->
+  <rect x="150" y="128" width="800" height="24" rx="12" fill="#fff4ec" stroke="#e07a2f"/>
+  <text x="550" y="145" font-size="12.5" font-weight="700" fill="#e07a2f" text-anchor="middle">📋 작업지시 = 이번 달 생산반영 수량 (supply_plans.prod_qty)  ·  한도 = min(캐파 2,000대, 부품으로 만들 수 있는 대수)</text>
+
+  <!-- 컨베이어 벨트 -->
+  <path d="M247,215 L862,215 Q935,215 935,295 Q935,375 862,375 L247,375" fill="none" stroke="#cfd8e3" stroke-width="16" stroke-linecap="round"/>
+  <path d="M247,215 L862,215 Q935,215 935,295 Q935,375 862,375 L247,375" fill="none" stroke="#9aa8ba" stroke-width="2" stroke-dasharray="8 6"/>
+
+  <!-- 협력사 -->
+  <rect x="15" y="170" width="100" height="90" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="1.5"/>
+  <text x="65" y="205" font-size="28" text-anchor="middle">🚚</text>
+  <text x="65" y="230" font-size="13" font-weight="700" fill="#1f3a5f" text-anchor="middle">협력사</text>
+  <text x="65" y="247" font-size="10.5" fill="#5b6b80" text-anchor="middle">주 단위 납품</text>
+  <line x1="115" y1="215" x2="158" y2="215" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- 1열: 왼쪽 → 오른쪽 -->
+  <g>
+    <rect x="160" y="168" width="175" height="95" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="178" y="190" font-size="11" font-weight="700" fill="#e07a2f">STEP 1</text>
+    <text x="247" y="208" font-size="26" text-anchor="middle">📥</text>
+    <text x="247" y="232" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">부품 입고 (GR)</text>
+    <rect x="182" y="240" width="130" height="17" rx="8.5" fill="#1f3a5f"/>
+    <text x="247" y="252.5" font-size="10.5" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">component_receipts</text>
+  </g>
+  <g>
+    <rect x="365" y="168" width="175" height="95" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="383" y="190" font-size="11" font-weight="700" fill="#e07a2f">STEP 2</text>
+    <text x="452" y="208" font-size="26" text-anchor="middle">🏬</text>
+    <text x="452" y="232" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">부품 창고</text>
+    <text x="452" y="252" font-size="11" fill="#5b6b80" text-anchor="middle">월 가용량 = SUM(입고)</text>
+  </g>
+  <g>
+    <rect x="570" y="168" width="175" height="95" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="588" y="190" font-size="11" font-weight="700" fill="#e07a2f">STEP 3</text>
+    <text x="657" y="208" font-size="26" text-anchor="middle">🔥</text>
+    <text x="657" y="232" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">프레임 용접·도장</text>
+    <text x="657" y="252" font-size="11" fill="#5b6b80" text-anchor="middle">🦴 프레임 ×1</text>
+  </g>
+  <g>
+    <rect x="775" y="168" width="175" height="95" rx="12" fill="#fff4ec" stroke="#e07a2f" stroke-width="2.5"/>
+    <text x="793" y="190" font-size="11" font-weight="700" fill="#e07a2f">STEP 4</text>
+    <text x="862" y="208" font-size="26" text-anchor="middle">🔧</text>
+    <text x="862" y="232" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">조립</text>
+    <text x="862" y="252" font-size="11" fill="#5b6b80" text-anchor="middle">🔋 ×1 · ⚙️ 모터 ×1 · 🛞 ×2</text>
+  </g>
+  <line x1="335" y1="215" x2="363" y2="215" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="540" y1="215" x2="568" y2="215" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="745" y1="215" x2="773" y2="215" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- BOM 메모 -->
+  <rect x="610" y="276" width="300" height="40" rx="10" fill="#e8eef6"/>
+  <text x="760" y="292" font-size="11" font-weight="700" fill="#1f3a5f" text-anchor="middle">📖 BOM: 자전거 1대에 부품이 몇 개 필요한지</text>
+  <text x="760" y="308" font-size="10.5" fill="#1f3a5f" text-anchor="middle" font-family="Consolas, monospace">bom_items.component_qty_per_unit</text>
+  <text x="430" y="300" font-size="11.5" font-weight="700" fill="#c0392b" text-anchor="middle">⚠️ 부품이 모자라면 조립 못 함 → MATERIAL 이월</text>
+
+  <!-- 2열: 오른쪽 → 왼쪽 -->
+  <g>
+    <rect x="775" y="328" width="175" height="95" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="793" y="350" font-size="11" font-weight="700" fill="#e07a2f">STEP 5</text>
+    <text x="862" y="368" font-size="26" text-anchor="middle">🔍</text>
+    <text x="862" y="392" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">품질 검사</text>
+    <text x="862" y="412" font-size="11" fill="#5b6b80" text-anchor="middle">주행 · 충전 테스트</text>
+  </g>
+  <g>
+    <rect x="570" y="328" width="175" height="95" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="588" y="350" font-size="11" font-weight="700" fill="#e07a2f">STEP 6</text>
+    <text x="657" y="368" font-size="26" text-anchor="middle">🚲</text>
+    <text x="657" y="392" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">완성 · 포장</text>
+    <rect x="602" y="400" width="110" height="17" rx="8.5" fill="#1f3a5f"/>
+    <text x="657" y="412.5" font-size="10.5" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">prod_qty</text>
+  </g>
+  <g>
+    <rect x="365" y="328" width="175" height="95" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="383" y="350" font-size="11" font-weight="700" fill="#e07a2f">STEP 7</text>
+    <text x="452" y="368" font-size="26" text-anchor="middle">🏗️</text>
+    <text x="452" y="392" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">출하 대기장</text>
+    <text x="452" y="412" font-size="11" fill="#5b6b80" text-anchor="middle">선적필요일 맞춰 대기</text>
+  </g>
+  <g>
+    <rect x="160" y="328" width="175" height="95" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+    <text x="178" y="350" font-size="11" font-weight="700" fill="#e07a2f">STEP 8</text>
+    <text x="247" y="368" font-size="26" text-anchor="middle">📦</text>
+    <text x="247" y="392" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">컨테이너 적입</text>
+    <rect x="192" y="400" width="110" height="17" rx="8.5" fill="#1f3a5f"/>
+    <text x="247" y="412.5" font-size="10.5" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">stuffing_qty</text>
+  </g>
+  <line x1="775" y1="375" x2="747" y2="375" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="570" y1="375" x2="542" y2="375" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="365" y1="375" x2="337" y2="375" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="862" y="445" font-size="10.5" fill="#5b6b80" text-anchor="middle">벨트 위를 따라 STEP 1 → 8</text>
+
+  <!-- 공장 밖: 출하 -->
+  <line x1="247" y1="423" x2="247" y2="503" stroke="#1f3a5f" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="160" y="505" width="200" height="70" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="190" y="548" font-size="26" text-anchor="middle">🚢</text>
+  <text x="275" y="535" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">선적 · 출하</text>
+  <rect x="220" y="545" width="110" height="17" rx="8.5" fill="#1f3a5f"/>
+  <text x="275" y="557.5" font-size="10.5" fill="#fff" text-anchor="middle" font-family="Consolas, monospace">ship_qty (누적)</text>
+  <line x1="360" y1="540" x2="455" y2="540" stroke="#1f3a5f" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrow)"/>
+  <text x="407" y="530" font-size="11" fill="#5b6b80" text-anchor="middle">🌊 운송 60일</text>
+  <rect x="457" y="505" width="150" height="70" rx="12" fill="#fff" stroke="#1f3a5f" stroke-width="2"/>
+  <text x="485" y="548" font-size="26" text-anchor="middle">🏁</text>
+  <text x="550" y="535" font-size="14" font-weight="700" fill="#1f3a5f" text-anchor="middle">고객 도착</text>
+  <text x="550" y="556" font-size="10.5" fill="#5b6b80" text-anchor="middle" font-family="Consolas, monospace">rqst_date</text>
+
+  <!-- 스냅샷 설명 -->
+  <rect x="635" y="505" width="335" height="70" rx="12" fill="#e8eef6"/>
+  <text x="652" y="528" font-size="12" font-weight="700" fill="#1f3a5f">🗂️ 매일 밤 order_snapshots에 쌓이는 것</text>
+  <text x="652" y="547" font-size="11" fill="#1f3a5f">prod_qty · stuffing_qty = 그날 그 단계에 머문 수량</text>
+  <text x="652" y="564" font-size="11" fill="#1f3a5f">ship_qty = 지금까지 누적 출하 수량</text>
+</svg>
